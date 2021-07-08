@@ -8,8 +8,8 @@
 - name: Stat Setuptools source
   stat:
     path: "{{python_setuptools_src_dir}}/{{python_setuptools_pkg}}"
-    get_md5: True
-    get_checksum: True
+    get_checksum: true
+    checksum_algorithm: md5
   register: setuptools_src_stat
 
 - name: Get Setuptools source
