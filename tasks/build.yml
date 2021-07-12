@@ -3,8 +3,8 @@
 - name: Stat Python source
   stat:
     path: "{{python_src_prefix}}/{{python_src_pkg}}"
-    get_md5: True
-    get_checksum: True
+    get_checksum: true
+    checksum_algorithm: md5
   register: python_src_stat
 
 - name: Get Python source
