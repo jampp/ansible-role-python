@@ -31,7 +31,7 @@
     {{python_bin}} {{python_setuptools_pkg}} --to-dir {{python_setuptools_pkg_dir}}
   args:
     chdir: "{{python_setuptools_src_dir}}"
-  when: (setuptools_installed | failed) or (setuptools_force_build)
+  when: (setuptools_installed is failed) or (setuptools_force_build)
 
 - name: Install pip
   command: "{{python_bin}} -m ensurepip"

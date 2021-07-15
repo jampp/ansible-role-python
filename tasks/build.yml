@@ -34,7 +34,7 @@
     make {{python_build_opts_default}} {{python_build_opts}}
   args:
     chdir: "{{python_src_pkg_dir}}"
-  when: (python_installed | failed) or (python_force_build)
+  when: (python_installed is failed) or (python_force_build)
 
 - name: Install Custom Python
   command: >
@@ -42,6 +42,6 @@
   args:
     chdir: "{{python_src_pkg_dir}}"
   become: true
-  when: (python_installed | failed) or (python_force_build)
+  when: (python_installed is failed) or (python_force_build)
 
 # vi:ts=2:sw=2:et:ft=yaml
