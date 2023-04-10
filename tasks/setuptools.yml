@@ -1,7 +1,7 @@
 ---
 
 - name: Set Setuptools install mode
-  set_facts:
+  set_fact:
     setuptools_legacy_install: false
   when: python_version is version('3.10', '>')
 
