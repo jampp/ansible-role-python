@@ -40,6 +40,8 @@ python_setuptools_url: "https://bootstrap.pypa.io/{{python_setuptools_pkg}}"
 
 python_setuptools_pkg_dir: "{{python_setuptools_src_dir}}/setuptools-python-{{python_version}}"
 
+setuptools_legacy_install: true
+
 # Setuptools binary
 #  This should also be set by yourself
 # python_setuptools_bin: /usr/local/bin/easy_install-2.7
