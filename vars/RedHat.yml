@@ -20,6 +20,8 @@ python_default_packages:
 python_default_packages_centos:
   - openssl
 
-python_default_packages_amzn: []
+python_default_packages_amzn:
+  - openssl-1.0.2k
+  - openssl-devel-1.0.2k
 
 # vi:ts=2:sw=2:et:ft=yaml
