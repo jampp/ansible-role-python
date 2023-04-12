@@ -1,0 +1,24 @@
+---
+
+python_default_packages:
+  - git
+  - yum-utils
+  - gcc
+  - gcc-c++
+  - libstdc++-devel
+  - libtool
+  - postgresql-devel
+  - libcurl
+  - libcurl-devel
+  - curl
+  - readline
+  - readline-devel
+  - bzip2-devel
+  - bzip2-libs
+  - nss-devel
+
+python_default_packages_amzn:
+  - openssl11
+  - openssl11-devel
+
+# vi:ts=2:sw=2:et:ft=yaml
