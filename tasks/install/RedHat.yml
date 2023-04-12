@@ -1,5 +1,29 @@
 ---
 
+- name: Force remove deprecated openssl (Amazon Linux 2)
+  yum:
+    name: 
+      - openssl
+      - openssl-devel
+    state: absent
+  when: (ansible_distribution == "Amazon") and (ansible_distribution_version == '2')
+
+- name: Set openssl version (Amazon Linux 2)
+  yum:
+    name: 
+      - openssl11 
+      - openssl11-devel
+    state: present
+  when: (ansible_distribution == 'Amazon') and (ansible_distribution_version == '2')
+
+- name: Set openssl version (Amazon Linux 1)
+  yum:
+    name: 
+      - openssl-1.0.2k
+      - openssl-devel-1.0.2k
+    state: present
+  when: (ansible_distribution == 'Amazon') and not (ansible_distribution_version == '2')
+
 - name: Install packages (RedHat)
   yum:
     state: present
@@ -12,12 +36,6 @@
     name: "{{item}}"
   with_items: "{{python_default_packages_centos|default([])}}"
   when: ansible_distribution == "CentOS"
-
-- name: Force remove openssl (Amazon Linux)
-  yum:
-    name: ['openssl', 'openssl-devel']
-    state: absent
-  when: ansible_distribution == "Amazon"
 
 - name: Install packages (Amazon Linux)
   yum:
