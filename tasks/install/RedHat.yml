@@ -2,7 +2,7 @@
 
 - name: Force remove deprecated openssl (Amazon Linux 2)
   yum:
-    name: 
+    name:
       - openssl
       - openssl-devel
     state: absent
@@ -10,15 +10,16 @@
 
 - name: Set openssl version (Amazon Linux 2)
   yum:
-    name: 
-      - openssl11 
+    name:
+      - openssl11
       - openssl11-devel
     state: present
   when: (ansible_distribution == 'Amazon') and (ansible_distribution_version == '2')
 
-- name: Set openssl version (Amazon Linux 1)
+- name: Set custom packages version (Amazon Linux 1)
   yum:
-    name: 
+    name:
+      - mysql-devel
       - openssl-1.0.2k
       - openssl-devel-1.0.2k
     state: present
