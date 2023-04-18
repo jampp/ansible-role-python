@@ -1,9 +1,15 @@
 ---
 
+- name: Set Setuptools install mode
+  set_fact:
+    setuptools_legacy_install: false
+  when: python_version is version('3.10', '>')
+
 - name: Setuptools source dir
   file:
     state: directory
     dest: "{{python_setuptools_pkg_dir}}"
+  when: setuptools_legacy_install
 
 - name: Stat Setuptools source
   stat:
@@ -11,13 +17,14 @@
     get_checksum: true
     checksum_algorithm: md5
   register: setuptools_src_stat
+  when: setuptools_legacy_install
 
 - name: Get Setuptools source
   get_url:
     url: "{{python_setuptools_url}}"
     dest: "{{python_setuptools_src_dir}}"
     validate_certs: "{{python_download_validate_certs}}"
-  when: not setuptools_src_stat.stat.exists
+  when: setuptools_legacy_install and (not setuptools_src_stat.stat.exists)
 
 - name: Check Custom Setuptools binary
   command: >
@@ -25,15 +32,20 @@
   ignore_errors: true
   register: setuptools_installed
   tags: skip_ansible_lint
+  when: setuptools_legacy_install
 
 - name: Build Custom Setuptools
   command: >
     {{python_bin}} {{python_setuptools_pkg}} --to-dir {{python_setuptools_pkg_dir}}
   args:
     chdir: "{{python_setuptools_src_dir}}"
-  when: (setuptools_installed is failed) or (setuptools_force_build)
+  when: setuptools_legacy_install and ((setuptools_installed is failed) or (setuptools_force_build))
 
 - name: Install pip
   command: "{{python_bin}} -m ensurepip"
+
+- name: Install Setuptools
+  command: "{{python_bin}} -m pip install setuptools"
+  when: not setuptools_legacy_install
 
 # vi:ts=2:sw=2:et:ft=yaml
