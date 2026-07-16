@@ -1,9 +1,11 @@
 ---
 
 - name: Install packages (RedHat)
-  yum:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'yum' }}"
     state: present
     name: "{{python_default_packages}}"
+    allowerasing: true
 
 - name: Install packages (CentOS)
   yum:
@@ -12,13 +14,15 @@
   when: ansible_distribution == "CentOS"
 
 - name: Install packages (Amazon Linux)
-  yum:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'yum' }}"
     state: present
     name: "{{python_default_packages_amzn|default([])}}"
   when: ansible_distribution == "Amazon"
 
 - name: Install additional dev packages
-  yum:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'yum' }}"
     state: present
     name: "{{python_dev_packages}}"
 
