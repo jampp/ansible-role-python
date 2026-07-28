@@ -1,11 +1,17 @@
 ---
 
 - name: Install packages (RedHat)
-  action:
-    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'yum' }}"
+  yum:
+    state: present
+    name: "{{python_default_packages}}"
+  when: not (ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023')
+
+- name: Install packages (RedHat, AL2023)
+  dnf:
     state: present
     name: "{{python_default_packages}}"
     allowerasing: true
+  when: ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023'
 
 - name: Install packages (CentOS)
   yum:
